@@ -1,4 +1,4 @@
-from .settings import ROOT_MEDIA_FILTERS, MEDIA_BUNDLES, BASE_ROOT_MEDIA_FILTERS
+from .settings import ROOT_MEDIA_FILTERS, MEDIA_BUNDLES, BASE_ROOT_MEDIA_FILTERS, REQUIREJS_PATH
 from mediagenerator.settings import MEDIA_DEV_MODE
 from mediagenerator.utils import load_backend, media_urls
 import os
@@ -46,6 +46,8 @@ def _render_include_media(bundle, variation):
     variation = variation.copy()
     filetype = os.path.splitext(bundle)[-1].lstrip('.')
 
+    if REQUIREJS_PATH:
+        requirejs = media_urls(REQUIREJS_PATH)
     # The "media" variation is special and defines CSS media types
     media_types = None
     if filetype == 'css':
@@ -73,8 +75,9 @@ def _render_include_media(bundle, variation):
         else:
             tag = u'<link rel="stylesheet" type="text/css" href="%s" />'
     elif filetype == 'js':
-        if data_main:
-            tag = u'<script data-main="%%s" type="text/javascript" src="%s"></script>' % data_main
+        if data_main and REQUIREJS_PATH:
+            tag = u'<script data-main="%s" type="text/javascript" src="%%s"></script>' % requirejs
+            return '\n'.join(tag % url[:-3] for url in urls)
         else:
             tag = u'<script type="text/javascript" src="%s"></script>'
     else:
