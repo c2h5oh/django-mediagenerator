@@ -2,6 +2,7 @@ from .settings import ROOT_MEDIA_FILTERS, MEDIA_BUNDLES, BASE_ROOT_MEDIA_FILTERS
 from mediagenerator.settings import MEDIA_DEV_MODE
 from mediagenerator.utils import load_backend, media_urls
 import os
+from urllib import unquote
 
 _cache = {}
 
@@ -46,14 +47,14 @@ def _render_include_media(bundle, variation):
     variation = variation.copy()
     filetype = os.path.splitext(bundle)[-1].lstrip('.')
 
-    if REQUIREJS_PATH:
-        requirejs = media_urls(REQUIREJS_PATH)
     # The "media" variation is special and defines CSS media types
     media_types = None
     if filetype == 'css':
         media_types = variation.pop('media', None)
     elif filetype == 'js':
-        data_main = variation.pop('data-main', None)
+        use_requirejs = variation.pop('requirejs', None)
+        req = media_urls(REQUIREJS_PATH)
+        requirejs = unquote(req.pop())
 
     if MEDIA_DEV_MODE:
         root = _load_root_filter(bundle)
@@ -69,15 +70,15 @@ def _render_include_media(bundle, variation):
 
     urls = media_urls(_get_key(bundle, variation_map))
 
+
     if filetype == 'css':
         if media_types:
             tag = u'<link rel="stylesheet" type="text/css" href="%%s" media="%s" />' % media_types
         else:
             tag = u'<link rel="stylesheet" type="text/css" href="%s" />'
     elif filetype == 'js':
-        if data_main and REQUIREJS_PATH:
-            tag = u'<script data-main="%s" type="text/javascript" src="%%s"></script>' % requirejs
-            return '\n'.join(tag % url[:-3] for url in urls)
+        if use_requirejs and REQUIREJS_PATH:
+            tag = u'<script data-main="%%s" type="text/javascript" src="%s"></script>' % requirejs
         else:
             tag = u'<script type="text/javascript" src="%s"></script>'
     else:
