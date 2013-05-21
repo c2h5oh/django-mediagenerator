@@ -2,6 +2,7 @@ from .settings import ROOT_MEDIA_FILTERS, MEDIA_BUNDLES, BASE_ROOT_MEDIA_FILTERS
 from mediagenerator.settings import MEDIA_DEV_MODE
 from mediagenerator.utils import load_backend, media_urls
 import os
+from urllib import unquote
 
 _cache = {}
 
@@ -52,8 +53,8 @@ def _render_include_media(bundle, variation):
         media_types = variation.pop('media', None)
     elif filetype == 'js':
         use_requirejs = variation.pop('requirejs', None)
-        req = media_urls(REQUIREJS_PATH)        
-        requirejs = req.pop()
+        req = media_urls(REQUIREJS_PATH)
+        requirejs = unquote(req.pop())
 
     if MEDIA_DEV_MODE:
         root = _load_root_filter(bundle)
@@ -77,7 +78,7 @@ def _render_include_media(bundle, variation):
             tag = u'<link rel="stylesheet" type="text/css" href="%s" />'
     elif filetype == 'js':
         if use_requirejs and REQUIREJS_PATH:
-            tag = u'<script data-main="%%s" type="text/javascript" src="%s"></script>' % requirejs            
+            tag = u'<script data-main="%%s" type="text/javascript" src="%s"></script>' % requirejs
         else:
             tag = u'<script type="text/javascript" src="%s"></script>'
     else:
