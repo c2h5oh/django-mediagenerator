@@ -24,3 +24,5 @@ BASE_ROOT_MEDIA_FILTERS = getattr(settings, 'BASE_ROOT_MEDIA_FILTERS', {
 })
 
 MEDIA_BUNDLES = getattr(settings, 'MEDIA_BUNDLES', ())
+
+REQUIREJS_PATH = getattr(settings, 'REQUIREJS_PATH', None)

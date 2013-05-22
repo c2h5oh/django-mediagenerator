@@ -38,7 +38,8 @@ def _refresh_dev_names():
                 versioned_url += '?version=' + hash
             _generated_names.setdefault(key, [])
             _generated_names[key].append(versioned_url)
-            _backend_mapping[url] = backend
+            _backend_mapping[url] = backend    
+
 
 class _MatchNothing(object):
     def match(self, content):

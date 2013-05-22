@@ -62,7 +62,8 @@ class Filter(object):
         # By default we simply return our input filters' file names
         for index, filter in enumerate(self.get_input_filters()):
             for name, hash in filter.get_dev_output_names(variation):
-                yield '%d/%s' % (index, name), hash
+                #yield '%d/%s' % (index, name), hash
+                yield name, hash
 
     def get_input(self, variation):
         """Yields contents for each input item."""

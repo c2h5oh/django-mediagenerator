@@ -54,7 +54,8 @@ class Bundles(Generator):
             variations = backend._get_variations_with_input()
             if not variations:
                 for name, hash in backend.get_dev_output_names({}):
-                    url = '%s|%s' % (bundle, name)
+                    #url = '%s|%s' % (bundle, name)
+                    url = '%s' % name
                     yield _get_key(bundle), url, hash
             else:
                 # Generate media files for all variation combinations
