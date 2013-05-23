@@ -1,3 +1,4 @@
+from . import settings
 from django import template
 from mediagenerator.generators.bundles.utils import _render_include_media
 from mediagenerator import utils
@@ -19,6 +20,9 @@ class MediaNode(template.Node):
 
 @register.tag
 def include_media(parser, token):
+    if settings.MEDIA_DEV_MODE:
+        utils._refresh_dev_names()
+
     try:
         contents = token.split_contents()
         bundle = contents[1]
