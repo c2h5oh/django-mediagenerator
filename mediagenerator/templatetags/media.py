@@ -1,4 +1,4 @@
-from . import settings
+from django.conf import settings
 from django import template
 from mediagenerator.generators.bundles.utils import _render_include_media
 from mediagenerator import utils
