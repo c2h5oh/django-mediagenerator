@@ -34,7 +34,7 @@ def _refresh_dev_names():
     for backend in _load_generators():
         for key, url, hash in backend.get_dev_output_names():
             versioned_url = urlquote(url)
-            if hash:
+            if hash and not media_settings.MEDIA_DEV_MODE:
                 versioned_url += '?version=' + hash
             _generated_names.setdefault(key, [])
             _generated_names[key].append(versioned_url)
@@ -90,7 +90,7 @@ def get_media_url_mapping():
 
 def media_urls(key, refresh=False):
     if media_settings.MEDIA_DEV_MODE:
-        if refresh:
+        if refresh or _generated_names == {}:
             _refresh_dev_names()
         return [DEV_MEDIA_URL + url for url in _generated_names[key]]
     return [PRODUCTION_MEDIA_URL + get_production_mapping()[key]]
