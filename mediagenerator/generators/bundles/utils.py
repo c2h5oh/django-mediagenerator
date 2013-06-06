@@ -66,7 +66,7 @@ def _render_include_media(bundle, variation):
         variation_map = tuple((key, variation[key])
                               for key in sorted(variation.keys()))
 
-    urls = media_urls(_get_key(bundle, variation_map))
+    urls = media_urls(_get_key(bundle, None))
 
 
     if filetype == 'css':
