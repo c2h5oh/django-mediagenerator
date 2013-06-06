@@ -20,9 +20,6 @@ class MediaNode(template.Node):
 
 @register.tag
 def include_media(parser, token):
-    if settings.MEDIA_DEV_MODE:
-        utils._refresh_dev_names()
-
     try:
         contents = token.split_contents()
         bundle = contents[1]
