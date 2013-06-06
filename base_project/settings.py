@@ -4,13 +4,13 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-MEDIA_BUNDLES = (
-    ('main.css',
+MEDIA_BUNDLES = {
+    'main.css': (
         'css/reset.css',
         'css/style.css',
         'css/icons/icon.css',
     ),
-)
+}
 
 # Get project root folder
 _project_root = os.path.dirname(__file__)

@@ -15,8 +15,7 @@ import os
 
 class Bundles(Generator):
     def get_output(self):
-        for items in MEDIA_BUNDLES:
-            bundle = items[0]
+        for bundle in MEDIA_BUNDLES.keys():
             backend = _load_root_filter(bundle)
             variations = backend._get_variations_with_input()
             if not variations:
@@ -48,8 +47,7 @@ class Bundles(Generator):
         return content, mimetype
 
     def get_dev_output_names(self):
-        for items in MEDIA_BUNDLES:
-            bundle = items[0]
+        for bundle in MEDIA_BUNDLES.keys():
             backend = _load_root_filter(bundle)
             variations = backend._get_variations_with_input()
             if not variations:

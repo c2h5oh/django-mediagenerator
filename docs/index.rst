@@ -55,13 +55,14 @@ Yes! Create two CSS bundles (``main-ie.css`` with ``ie.css`` and ``main.css`` wi
         'css/design.css',
     )
 
-    MEDIA_BUNDLES = (
-        ('main.css',)
-            + _base_main_bundle,
+    MEDIA_BUNDLES = {
+        'main.css': (
+            _base_main_bundle,
         ('main-ie.css',)
             + _base_main_bundle
             + ('ie.css',),
-    )
+        )
+    }
 
 Then, use this conditional comment sequence to include the bundles:
 

@@ -23,10 +23,8 @@ def _get_root_filters_list(filetype):
     return root_filters
 
 def _load_root_filter_uncached(bundle):
-    for items in MEDIA_BUNDLES:
-        if items[0] == bundle:
-            input = items[1:]
-            break
+    if bundle in MEDIA_BUNDLES:
+        input = MEDIA_BUNDLES.get(bundle)
     else:
         raise ValueError('Could not find media bundle "%s"' % bundle)
     filetype = os.path.splitext(bundle)[-1].lstrip('.')

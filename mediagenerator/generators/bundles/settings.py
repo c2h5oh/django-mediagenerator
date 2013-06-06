@@ -23,6 +23,6 @@ BASE_ROOT_MEDIA_FILTERS = getattr(settings, 'BASE_ROOT_MEDIA_FILTERS', {
     'css': 'mediagenerator.filters.cssurl.CSSURL',
 })
 
-MEDIA_BUNDLES = getattr(settings, 'MEDIA_BUNDLES', ())
+MEDIA_BUNDLES = getattr(settings, 'MEDIA_BUNDLES', {})
 
 REQUIREJS_PATH = getattr(settings, 'REQUIREJS_PATH', None)
