@@ -29,12 +29,9 @@ class CopyFiles(Generator):
             self.collect_copyable_files(media_files, root)
 
         for name, source in media_files.items():
-            if settings.MEDIA_DEV_MODE:
-                hash = None
-            else:
-                fp = open(source, 'rb')
-                hash = sha1(fp.read()).hexdigest()
-                fp.close()
+            fp = open(source, 'rb')
+            hash = sha1(fp.read()).hexdigest()
+            fp.close()
             yield name, name, hash
 
     def collect_copyable_files(self, media_files, root):
